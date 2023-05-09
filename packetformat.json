@@ -1,0 +1,9 @@
+{
+    "from" : "server",
+    "to" : "client",
+    "data" : {
+        "temp" : 35,
+        "humd" : 60,
+        "atm" : 1012
+    }
+}
