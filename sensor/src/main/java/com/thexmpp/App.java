@@ -161,8 +161,7 @@ public final class App {
 
             // send message to group
             while (true) {
-                String msg = sc.nextLine();
-                muc.sendMessage(msg);
+                int temp = 
                 if (msg.equals("bye!")) {
                   break;
                 }
