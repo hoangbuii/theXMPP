@@ -161,12 +161,18 @@ public final class App {
 
             // send message to group
             while (true) {
-                String msg = sc.nextLine();
-                if (msg.equals("bye!")) {
-                  break;
-                }
-                muc.sendMessage(msg);
+              String msg = "Sensor|gateway|" + SGN.getTime() + "|0|" + SGN.getTemp() + "|" +  SGN.getHumid() + "|" + SGN.getAtm() + "|none|";
+              
+              muc.sendMessage(msg);
+              try {
+                Thread.sleep(3000);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            if (msg.equals("bye!")) {
+              break;
+            }
+          }
             muc.leave();
             conn.disconnect();
             sc.close();
