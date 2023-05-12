@@ -161,10 +161,11 @@ public final class App {
 
             // send message to group
             while (true) {
-                int temp = 
+                String msg = sc.nextLine();
                 if (msg.equals("bye!")) {
                   break;
                 }
+                muc.sendMessage(msg);
             }
             muc.leave();
             conn.disconnect();
