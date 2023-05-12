@@ -4,8 +4,6 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
-
-import org.jivesoftware.smackx.amp.AMPDeliverCondition.Value;
 public class SGN {
     private static final double MIN_TEMP = 10.0;
     private static final double MAX_TEMP = 40.0;
@@ -45,9 +43,6 @@ public class SGN {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmssddMMyyyy");
         String formattedDateTime = currentDateTime.format(formatter);
         return formattedDateTime;
-    }
-    public static void main(String[] args) {
-        System.out.println(getAtm());
     }
 }
 
