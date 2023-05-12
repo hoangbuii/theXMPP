@@ -1,5 +1,7 @@
 package com.thexmpp;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.jivesoftware.smack.*;
@@ -23,6 +25,64 @@ import org.jivesoftware.smack.packet.*;
 public final class App {
     private App() {
     }
+
+    public static Map<String, String> processPacket(String packet) throws StringIndexOutOfBoundsException {
+      try {
+          String from = packet.substring(0, packet.indexOf('|'));
+          String subpacket = packet.substring(packet.indexOf('|') + 1);
+          String to = subpacket.substring(0, subpacket.indexOf('|'));
+          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+          String time = subpacket.substring(0, subpacket.indexOf('|'));
+          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+          String type = subpacket.substring(0, subpacket.indexOf('|'));
+          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+          String temp = subpacket.substring(0, subpacket.indexOf('|'));
+          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+          String humid = subpacket.substring(0, subpacket.indexOf('|'));
+          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+          String atm = subpacket.substring(0, subpacket.indexOf('|'));
+          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+          String control = subpacket.substring(0, subpacket.indexOf('|'));
+
+          Map<String, String> sensorData = new HashMap<String, String>();
+
+          sensorData.put("from", from);
+          sensorData.put("to", to);
+          sensorData.put("time", time);
+          sensorData.put("type", type);
+          sensorData.put("temp", temp);
+          sensorData.put("humid", humid);
+          sensorData.put("atm", atm);
+          sensorData.put("control", control);
+
+        return sensorData;
+      } catch (NullPointerException e) {
+        //e.printStackTrace();
+        System.out.println("Error packet: Missing data");
+      }
+      return null;
+
+  }
+
+  public static Map<String, Integer> processTime(String timeString) {
+    try {
+      if (timeString.length() < 14) {
+        System.out.println("Error packet: Error time format");
+        return null;
+      }
+      Map<String, Integer> time = new HashMap<String, Integer>();
+      time.put("hour", Integer.valueOf(timeString.substring(0,2)));
+      time.put("minute", Integer.valueOf(timeString.substring(2,4)));
+      time.put("second", Integer.valueOf(timeString.substring(4,6)));
+      time.put("day", Integer.valueOf(timeString.substring(6,8)));
+      time.put("month", Integer.valueOf(timeString.substring(8,10)));
+      time.put("year", Integer.valueOf(timeString.substring(10)));
+      return time;
+    } catch (NullPointerException e) {
+      System.out.println("Error packet: Error time");
+    }
+    return null;
+  }
 
     /**
      * Says hello to the world.
@@ -69,26 +129,52 @@ public final class App {
             EntityBareJid jid = JidCreate.entityBareFrom(groupName + "@conference." + domain);
             MultiUserChat muc = manager.getMultiUserChat(jid);
 
-
+            String tempNickname = "";
             // Enter group
             while (true) {
                 try {
                     System.out.print("Enter a nickname: ");
-                    String nickname = sc.nextLine();
-                    muc.join(Resourcepart.from(nickname));
+                    tempNickname = sc.nextLine();
+                    muc.join(Resourcepart.from(tempNickname));
+                    
                     break;
                 } catch (XMPPErrorException e) {
                     System.out.println("This nick name alreadly exits!");
                     e.getMessage();
+                } catch (NullPointerException e) {
+                  System.out.println(e.getMessage());
                 }
             }
+            final String NICKNAME = tempNickname;
             
             
             // Add a listener to receive messages from the chat room
             muc.addMessageListener(new MessageListener() {
                 @Override
                 public void processMessage(Message message) {
-                    System.out.println(message.getFrom() + "\t: " + message.getBody());
+                    try {
+                        System.out.println(message.getFrom() + ": " + message.getBody());
+                        String receiverMessage = message.getBody();
+                        if (receiverMessage != null) {
+                          //System.out.println("null");
+                          Map<String, String> data = processPacket(receiverMessage);
+                          Map<String, Integer> timeData = processTime(data.get("time"));
+                          if (timeData == null) {
+                            System.out.println("Error packet: Missing Time");
+                          } else {
+                            if (data.get("to").equals(NICKNAME)) {
+                                System.out.print("Data from: " +  data.get("from") + " at ");
+                                System.out.printf("%d:%d:%d %d-%d-%d%n", timeData.get("hour"), timeData.get("minute"), timeData.get("second"), 
+                                        timeData.get("day"), timeData.get("month"), timeData.get("year"));
+                                System.out.println("Temperature: " + data.get("temp"));
+                                System.out.println("Humidity: " + data.get("humid"));
+                                System.out.println("Atmospheric pressure: " + data.get("atm"));
+                            }
+                          }
+                        }
+                    } catch (StringIndexOutOfBoundsException e) {
+                        System.out.println("Error packet: Missing some collums");
+                    }
                 }
             });
 
@@ -161,10 +247,11 @@ public final class App {
 
             // send message to group
             while (true) {
-                int temp = 
+                String msg = sc.nextLine();
                 if (msg.equals("bye!")) {
                   break;
                 }
+                muc.sendMessage(msg);
             }
             muc.leave();
             conn.disconnect();
