@@ -1,5 +1,8 @@
 package com.thexmpp;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -26,62 +29,63 @@ public final class App {
     private App() {
     }
 
-    public static Map<String, String> processPacket(String packet) throws StringIndexOutOfBoundsException {
-      try {
-          String from = packet.substring(0, packet.indexOf('|'));
-          String subpacket = packet.substring(packet.indexOf('|') + 1);
-          String to = subpacket.substring(0, subpacket.indexOf('|'));
-          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
-          String time = subpacket.substring(0, subpacket.indexOf('|'));
-          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
-          String type = subpacket.substring(0, subpacket.indexOf('|'));
-          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
-          String temp = subpacket.substring(0, subpacket.indexOf('|'));
-          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
-          String humid = subpacket.substring(0, subpacket.indexOf('|'));
-          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
-          String atm = subpacket.substring(0, subpacket.indexOf('|'));
-          subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
-          String control = subpacket.substring(0, subpacket.indexOf('|'));
+    public static Map<String, String> processPacket(String packet) 
+    throws StringIndexOutOfBoundsException {
+        try {
+            String from = packet.substring(0, packet.indexOf('|'));
+            String subpacket = packet.substring(packet.indexOf('|') + 1);
+            String to = subpacket.substring(0, subpacket.indexOf('|'));
+            subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+            String time = subpacket.substring(0, subpacket.indexOf('|'));
+            subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+            String type = subpacket.substring(0, subpacket.indexOf('|'));
+            subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+            String temp = subpacket.substring(0, subpacket.indexOf('|'));
+            subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+            String humid = subpacket.substring(0, subpacket.indexOf('|'));
+            subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+            String atm = subpacket.substring(0, subpacket.indexOf('|'));
+            subpacket = subpacket.substring(subpacket.indexOf('|') + 1);
+            String control = subpacket.substring(0, subpacket.indexOf('|'));
 
-          Map<String, String> sensorData = new HashMap<String, String>();
+            Map<String, String> sensorData = new HashMap<String, String>();
 
-          sensorData.put("from", from);
-          sensorData.put("to", to);
-          sensorData.put("time", time);
-          sensorData.put("type", type);
-          sensorData.put("temp", temp);
-          sensorData.put("humid", humid);
-          sensorData.put("atm", atm);
-          sensorData.put("control", control);
+            sensorData.put("from", from);
+            sensorData.put("to", to);
+            sensorData.put("time", time);
+            sensorData.put("type", type);
+            sensorData.put("temp", temp);
+            sensorData.put("humid", humid);
+            sensorData.put("atm", atm);
+            sensorData.put("control", control);
 
-        return sensorData;
-      } catch (NullPointerException e) {
-        //e.printStackTrace();
-        System.out.println("Error packet: Missing data");
-      }
-      return null;
+            return sensorData;
+        } catch (NullPointerException e) {
+            //e.printStackTrace();
+            System.out.println("Error packet: Missing data");
+        }
+        return null;
 
   }
 
-  public static Map<String, Integer> processTime(String timeString) {
-    try {
-      if (timeString.length() < 14) {
-        System.out.println("Error packet: Error time format");
-        return null;
+  public static Map<String, String> processTime(String timeString) {
+      try {
+          if (timeString.length() < 14) {
+            System.out.println("Error packet: Error time format");
+            return null;
+          }
+          Map<String, String> time = new HashMap<String, String>();
+          time.put("hour", timeString.substring(0,2));
+          time.put("minute", timeString.substring(2,4));
+          time.put("second", timeString.substring(4,6));
+          time.put("day", timeString.substring(6,8));
+          time.put("month", timeString.substring(8,10));
+          time.put("year", timeString.substring(10));
+          return time;
+      } catch (NullPointerException e) {
+          System.out.println("Error packet: Error time");
       }
-      Map<String, Integer> time = new HashMap<String, Integer>();
-      time.put("hour", Integer.valueOf(timeString.substring(0,2)));
-      time.put("minute", Integer.valueOf(timeString.substring(2,4)));
-      time.put("second", Integer.valueOf(timeString.substring(4,6)));
-      time.put("day", Integer.valueOf(timeString.substring(6,8)));
-      time.put("month", Integer.valueOf(timeString.substring(8,10)));
-      time.put("year", Integer.valueOf(timeString.substring(10)));
-      return time;
-    } catch (NullPointerException e) {
-      System.out.println("Error packet: Error time");
-    }
-    return null;
+      return null;
   }
 
     /**
@@ -142,7 +146,7 @@ public final class App {
                     System.out.println("This nick name alreadly exits!");
                     e.getMessage();
                 } catch (NullPointerException e) {
-                  System.out.println(e.getMessage());
+                    System.out.println(e.getMessage());
                 }
             }
             final String NICKNAME = tempNickname;
@@ -153,24 +157,47 @@ public final class App {
                 @Override
                 public void processMessage(Message message) {
                     try {
+                        // Display message
                         System.out.println(message.getFrom() + ": " + message.getBody());
+                        // Get data from message(packet)
                         String receiverMessage = message.getBody();
                         if (receiverMessage != null) {
-                          //System.out.println("null");
-                          Map<String, String> data = processPacket(receiverMessage);
-                          Map<String, Integer> timeData = processTime(data.get("time"));
-                          if (timeData == null) {
-                            System.out.println("Error packet: Missing Time");
-                          } else {
-                            if (data.get("to").equals(NICKNAME)) {
-                                System.out.print("Data from: " +  data.get("from") + " at ");
-                                System.out.printf("%d:%d:%d %d-%d-%d%n", timeData.get("hour"), timeData.get("minute"), timeData.get("second"), 
-                                        timeData.get("day"), timeData.get("month"), timeData.get("year"));
-                                System.out.println("Temperature: " + data.get("temp"));
-                                System.out.println("Humidity: " + data.get("humid"));
-                                System.out.println("Atmospheric pressure: " + data.get("atm"));
+                            //System.out.println("null");
+                            Map<String, String> data = processPacket(receiverMessage);
+                            Map<String, String> timeData = processTime(data.get("time"));
+                            if (timeData == null) {
+                                System.out.println("Error packet: Missing Time");
+                            } else {
+                                if (data.get("to").equals(NICKNAME)) {
+                                    // Display data
+                                    System.out.print("Data from: " +  data.get("from") + " at ");
+                                    System.out.printf("%s:%s:%s %s-%s-%s%n", timeData.get("hour"),
+                                        timeData.get("minute"), timeData.get("second"), 
+                                        timeData.get("day"), timeData.get("month"), 
+                                        timeData.get("year"));
+                                    System.out.println("Temperature: " + data.get("temp"));
+                                    System.out.println("Humidity: " + data.get("humid"));
+                                    System.out.println("Atmospheric pressure: " + data.get("atm"));
+                                    
+                                    // Save data to log
+                                    String stringLog = String.format(
+                                        "[%s:%s:%s %s-%s-%s] temp:%s, humid:%s, atm:%s%n", 
+                                        timeData.get("hour"), timeData.get("minute"), 
+                                        timeData.get("second"), timeData.get("day"), 
+                                        timeData.get("month"), timeData.get("year"), 
+                                        data.get("temp"), data.get("humid"), data.get("atm"));
+                                    try {
+                                        File file = new File("logs/" + data.get("from") + ".txt");
+                                        FileWriter fr = new FileWriter(file, true);
+                                
+                                            fr.write(stringLog);
+                                            fr.close();
+                                    } catch (IOException e) {
+                                        System.out.println("Error: Can't write to log file");
+                                    }
+                                
+                                }
                             }
-                          }
                         }
                     } catch (StringIndexOutOfBoundsException e) {
                         System.out.println("Error packet: Missing some collums");
@@ -187,61 +214,61 @@ public final class App {
             // Add listeners to receive notifications about changes in the room
             muc.addParticipantStatusListener(new ParticipantStatusListener() {
 
-              @Override
-              public void joined(EntityFullJid participant) {
-                System.out.println(participant + " has joined the room.");
-              }
+                @Override
+                public void joined(EntityFullJid participant) {
+                    System.out.println(participant + " has joined the room.");
+                }
 
-              @Override
-              public void left(EntityFullJid participant) {
-                System.out.println(participant + " has left the room.");
-              }
+                @Override
+                public void left(EntityFullJid participant) {
+                    System.out.println(participant + " has left the room.");
+                }
 
-              @Override
-              public void kicked(EntityFullJid participant, Jid actor, String reason) {
-                System.out.println(participant + " has kicked by " + actor + " for " + reason);
-              }
+                @Override
+                public void kicked(EntityFullJid participant, Jid actor, String reason) {
+                    System.out.println(participant + " has kicked by " + actor + " for " + reason);
+                }
 
-              @Override
-              public void banned(EntityFullJid participant, Jid actor, String reason) {
-                System.out.println(participant + " has banned by " + actor + " for " + reason);
-              }
+                @Override
+                public void banned(EntityFullJid participant, Jid actor, String reason) {
+                    System.out.println(participant + " has banned by " + actor + " for " + reason);
+                }
 
-              @Override
-              public void nicknameChanged(EntityFullJid participant, Resourcepart newNickname) {
-                System.out.println(participant + " has change nickname.");
-              }
+                @Override
+                public void nicknameChanged(EntityFullJid participant, Resourcepart newNickname) {
+                    System.out.println(participant + " has change nickname to " + newNickname);
+                }
 
-              @Override
-              public void voiceGranted(EntityFullJid participant) {
-              }
-              @Override
-              public void voiceRevoked(EntityFullJid participant) {
-              }
-              @Override
-              public void membershipGranted(EntityFullJid participant) {
-              }
-              @Override
-              public void membershipRevoked(EntityFullJid participant) {
-              }
-              @Override
-              public void moderatorGranted(EntityFullJid participant) {
-              }
-              @Override
-              public void moderatorRevoked(EntityFullJid participant) {
-              }
-              @Override
-              public void ownershipGranted(EntityFullJid participant) {
-              }
-              @Override
-              public void ownershipRevoked(EntityFullJid participant) {
-              }
-              @Override
-              public void adminGranted(EntityFullJid participant) {
-              }
-              @Override
-              public void adminRevoked(EntityFullJid participant) {
-              }
+                @Override
+                public void voiceGranted(EntityFullJid participant) {
+                }
+                @Override
+                public void voiceRevoked(EntityFullJid participant) {
+                }
+                @Override
+                public void membershipGranted(EntityFullJid participant) {
+                }
+                @Override
+                public void membershipRevoked(EntityFullJid participant) {
+                }
+                @Override
+                public void moderatorGranted(EntityFullJid participant) {
+                }
+                @Override
+                public void moderatorRevoked(EntityFullJid participant) {
+                }
+                @Override
+                public void ownershipGranted(EntityFullJid participant) {
+                }
+                @Override
+                public void ownershipRevoked(EntityFullJid participant) {
+                }
+                @Override
+                public void adminGranted(EntityFullJid participant) {
+                }
+                @Override
+                public void adminRevoked(EntityFullJid participant) {
+                }
               
             });
 
@@ -249,7 +276,7 @@ public final class App {
             while (true) {
                 String msg = sc.nextLine();
                 if (msg.equals("bye!")) {
-                  break;
+                    break;
                 }
                 muc.sendMessage(msg);
             }
@@ -257,7 +284,7 @@ public final class App {
             conn.disconnect();
             sc.close();
         } catch (Exception e) {
-          e.printStackTrace();
+            e.printStackTrace();
         }
-      }
+    }
 }
