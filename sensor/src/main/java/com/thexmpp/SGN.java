@@ -3,41 +3,42 @@ package com.thexmpp;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Random;
-public class SGN {
-    private static final double MIN_TEMP = 10.0;
-    private static final double MAX_TEMP = 40.0;
-    private static final double MIN_HUMID = 25.0;
-    private static final double MAX_HUMID = 100.0;
-    private static final double MIN_ATM = 990.0;
-    private static final double MAX_ATM = 1020.0;
-    
-    private static Random random = new Random();
 
-    public static String formatData( double value) {
+public class SGN {
+    static double Temp = Math.random() * 20 + 10;
+    static double Humid = Math.random() * 40 + 25;
+    static double Atm = Math.random() * 15 + 990;
+
+    public static String formatData(double value) {
         DecimalFormat decimalFormat = new DecimalFormat("#0.00");
         String fomattedValue = decimalFormat.format(value);
         return fomattedValue;
     }
 
     public static String getTemp() {
-        double Temp = MIN_TEMP + (MAX_TEMP - MIN_TEMP) * random.nextDouble();
+        double sign = Math.random() < 0.5 ? 1 : -1;
+        double offset = Math.random() * 1.4 + 1;
+        Temp = Temp + (sign * offset);
         String tempString = formatData(Temp);
         return tempString;
     }
 
     public static String getHumid() {
-        double Humid = MIN_HUMID + (MAX_HUMID - MIN_HUMID) * random.nextDouble();
+        double sign = Math.random() < 0.5 ? 1 : -1;
+        double offset = Math.random() * 3 + 2;
+        Humid = Humid + (sign * offset);
         String humidString = formatData(Humid);
-         return humidString;
+        return humidString;
     }
 
     public static String getAtm() {
-        double getAtm =  MIN_ATM + (MAX_ATM - MIN_ATM) * random.nextDouble();
-        String atmString = formatData(getAtm);
+        double sign = Math.random() < 0.5 ? 1 : -1;
+        double offset = Math.random() * 3 + 3;
+        Atm = Atm + (sign * offset);
+        String atmString = formatData(Atm);
         return atmString;
     }
-    
+
     public static String getTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmssddMMyyyy");
@@ -45,4 +46,3 @@ public class SGN {
         return formattedDateTime;
     }
 }
-
