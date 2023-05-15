@@ -71,10 +71,11 @@ public final class App {
 
 
             // Enter group
+            String nickname;
             while (true) {
                 try {
                     System.out.print("Enter a nickname: ");
-                    String nickname = sc.nextLine();
+                    nickname = sc.nextLine();
                     muc.join(Resourcepart.from(nickname));
                     break;
                 } catch (XMPPErrorException e) {
@@ -161,7 +162,7 @@ public final class App {
 
             // send message to group
             while (true) {
-              String msg = "Sensor|gateway|" + SGN.getTime() + "|0|" + SGN.getTemp() + "|" +  SGN.getHumid() + "|" + SGN.getAtm() + "|none|";
+              String msg = nickname + "|gateway|" + SGN.getTime() + "|0|" + SGN.getTemp() + "|" +  SGN.getHumid() + "|" + SGN.getAtm() + "|none|";
               
               muc.sendMessage(msg);
               try {
