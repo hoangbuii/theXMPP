@@ -1,5 +1,6 @@
 package com.thexmpp;
 
+import java.util.Map;
 import java.util.Scanner;
 
 import org.jivesoftware.smack.*;
@@ -23,6 +24,7 @@ import org.jivesoftware.smack.packet.*;
 public final class App {
     private App() {
     }
+    public static int status = 1;
 
     /**
      * Says hello to the world.
@@ -71,25 +73,53 @@ public final class App {
 
 
             // Enter group
-            String nickname;
+            String tempNickname;
             while (true) {
                 try {
                     System.out.print("Enter a nickname: ");
-                    nickname = sc.nextLine();
-                    muc.join(Resourcepart.from(nickname));
+                    tempNickname = sc.nextLine();
+                    muc.join(Resourcepart.from(tempNickname));
                     break;
                 } catch (XMPPErrorException e) {
                     System.out.println("This nick name alreadly exits!");
                     e.getMessage();
                 }
             }
-            
+
+            final String NICKNAME = tempNickname;
+            //int status = 1;
             
             // Add a listener to receive messages from the chat room
             muc.addMessageListener(new MessageListener() {
                 @Override
                 public void processMessage(Message message) {
-                    System.out.println(message.getFrom() + "\t: " + message.getBody());
+                    try {
+                        // Display message
+                        System.out.println(message.getFrom() + ": " + message.getBody());
+                        // Get data from message(packet)
+                        String receiverMessage = message.getBody();
+                        if (receiverMessage != null) {
+                            //System.out.println("null");
+                            Map<String, String> data = Packet.processPacket(receiverMessage);
+                            Map<String, String> timeData = Packet.processTime(data.get("time"));
+                            if (timeData == null) {
+                                System.out.println("Error packet: Missing Time");
+                            } else {
+                                if (data.get("to").equals(NICKNAME)) {
+                                    if (data.get("control").equals("on")) {
+                                        status = 1;
+                                        System.out.println("Sensor is on");
+                                    } else if (data.get("control").equals("off")) {
+                                        status = 0;
+                                    } else {
+                                        System.out.println("Error: error control message");
+                                    }
+                                }
+                            }
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Error packet: Missing some collums");
+                    }
                 }
             });
 
@@ -104,27 +134,27 @@ public final class App {
 
               @Override
               public void joined(EntityFullJid participant) {
-                System.out.println(participant + " has joined the room.");
+                  System.out.println(participant + " has joined the room.");
               }
 
               @Override
               public void left(EntityFullJid participant) {
-                System.out.println(participant + " has left the room.");
+                  System.out.println(participant + " has left the room.");
               }
 
               @Override
               public void kicked(EntityFullJid participant, Jid actor, String reason) {
-                System.out.println(participant + " has kicked by " + actor + " for " + reason);
+                  System.out.println(participant + " has kicked by " + actor + " for " + reason);
               }
 
               @Override
               public void banned(EntityFullJid participant, Jid actor, String reason) {
-                System.out.println(participant + " has banned by " + actor + " for " + reason);
+                  System.out.println(participant + " has banned by " + actor + " for " + reason);
               }
 
               @Override
               public void nicknameChanged(EntityFullJid participant, Resourcepart newNickname) {
-                System.out.println(participant + " has change nickname.");
+                  System.out.println(participant + " has change nickname to" + newNickname);
               }
 
               @Override
@@ -162,23 +192,30 @@ public final class App {
 
             // send message to group
             while (true) {
-              String msg = nickname + "|gateway|" + SGN.getTime() + "|0|" + SGN.getTemp() + "|" +  SGN.getHumid() + "|" + SGN.getAtm() + "|none|";
-              
-              muc.sendMessage(msg);
-              try {
-                Thread.sleep(3000);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
+                String msg = "";
+                if (status == 1) {
+                    msg = tempNickname + "|gateway|" + SGN.getTime() + "|0|" + SGN.getTemp() + 
+                        "|" +  SGN.getHumid() + "|" + SGN.getAtm() + "|none|";
+                    
+                    muc.sendMessage(msg);
+                } else {
+                    System.out.println("Sensor is off");
+                    //continue;
+                }
+                try {
+                      Thread.sleep(5000);
+                  } catch (InterruptedException e) {
+                      e.printStackTrace();
+                  }
+              if (msg.equals("bye!")) {
+                  break;
+              }
             }
-            if (msg.equals("bye!")) {
-              break;
-            }
-          }
             muc.leave();
             conn.disconnect();
             sc.close();
         } catch (Exception e) {
-          e.printStackTrace();
+            e.printStackTrace();
         }
-      }
+    }
 }
