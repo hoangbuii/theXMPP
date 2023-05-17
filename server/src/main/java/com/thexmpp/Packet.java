@@ -1,5 +1,7 @@
 package com.thexmpp;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,5 +63,12 @@ public class Packet {
         }
         return null;
 
-  }
+    }
+
+    public static String getTime() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmssddMMyyyy");
+        String formattedDateTime = currentDateTime.format(formatter);
+        return formattedDateTime;
+    }
 }
