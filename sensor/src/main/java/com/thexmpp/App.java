@@ -20,6 +20,7 @@ import org.jivesoftware.smack.packet.*;
 
 /**
  * Hello world!
+ * sensor
  */
 public final class App {
     private App() {

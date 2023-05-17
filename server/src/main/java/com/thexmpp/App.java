@@ -30,7 +30,7 @@ public final class App {
 
     /**
      * Says hello to the world.
-     * 
+     * server
      * @param args The arguments of the program.
      * @throws XmppStringprepException
      */
