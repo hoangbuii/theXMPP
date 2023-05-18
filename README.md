@@ -25,7 +25,7 @@ associated with this approach.
 ## Packet format
 | Source | Destination | Time | Type | Temperature | Humidity | Atmospheric Pressure | Control Data |
 | ------ | ----------- | ---- | ---- | ----------- | -------- | -------------------- | ------------ |
-|It's sender who send packet|It's receiver who receive this packet and process it|Time that sender get data|Type equals 0 if it's sensor data and equals 1 if it's control data|Equals temperature of sensor or 0 if it's control data|Equals humidity of sensor or 0 if it's control data|Equals atmospheric pressure of sensor or 0 if it's control data|Control message or "none" if it's sensor data|
+|The sender of the packet|The receiver of the packet for processing|Time required to generate data|'0' for sensor data and '1' for control data|Equals to temperature of sensor or 0 for control data|Equals to humidity of sensor or 0 for control data|Equals to atmospheric pressure of sensor or 0 for control data|Control message or "none" for sensor data|
 
 Example:
 ```java
