@@ -16,7 +16,7 @@ export default function Nodedetail(props) {
     <div className='node-content-container' style={color} onMouseOver={() => setColor(dark)} onMouseOut={() => setColor(light)}>
         <div className='node-text'>{ props.node }</div>
         <div className='status-text'>{ props.status }</div>
-        <div className='total-time-text'>{props.time}</div>
+        <div className='total-time-text'>{ props.time }</div>
     </div>
   )
 }
