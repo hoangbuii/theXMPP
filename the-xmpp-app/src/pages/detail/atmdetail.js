@@ -10,6 +10,7 @@ export default function Atmdetail() {
   return (
         <div className='detail-container'>
           <Header />
+    
           <div className='content-container'>
             <div className='overview-container'>
               <div className='title-container'>
@@ -26,10 +27,10 @@ export default function Atmdetail() {
                   Average Pressure
                 </div>
                 <div className='num-avg'>
-                { overviewData[2][0] }
+                  { overviewData[2][0] }
                 </div>
                 <div className='unit-avg'>
-                    mbar
+                  mbar
                 </div>
               </div>
               <div className='max-container'>
@@ -37,7 +38,7 @@ export default function Atmdetail() {
                   Max Pressure
                 </div>
                 <div className='num-max'>
-                { overviewData[2][1] }
+                  { overviewData[2][1] }
                 </div>
                 <div className='unit-max'>
                     mbar
@@ -47,14 +48,16 @@ export default function Atmdetail() {
                 <div className='title-min'>
                   Min Pressure
                 </div>
+
                 <div className='num-min'>
-                { overviewData[2][2] }
+                  { overviewData[2][2] }
                 </div>
                 <div className='unit-min'>
                     mbar
                 </div>
               </div>
             </div>
+
             <div className='distribution-container'>
             <div className='title-container'>
               <div className='icon-container'>
@@ -66,8 +69,9 @@ export default function Atmdetail() {
             </div>
             <div className='bar-chart'>
               <BarChart type="atm" />
+            </div>
           </div>
-          </div>
+
           <div className='ratio-container'>
             <div className='title-container'>
               <div className='icon-container'>
@@ -85,7 +89,8 @@ export default function Atmdetail() {
             <div className='note2-color'></div>
             <div className='note2-text'>Greater than Average</div>
           </div>
-          </div>
+         </div>
+
           <Footer />
         </div>
   )
