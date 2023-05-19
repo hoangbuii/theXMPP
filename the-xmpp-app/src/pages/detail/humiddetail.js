@@ -10,6 +10,7 @@ export default function Humiddetail() {
     return (
         <div className='detail-container'>
           <Header />
+        
           <div className='content-container'>
             <div className='overview-container'>
               <div className='title-container'>
@@ -26,7 +27,7 @@ export default function Humiddetail() {
                   Average Humidity
                 </div>
                 <div className='num-avg'>
-                { overviewData[1][0] } %
+                    { overviewData[1][0] } %
                 </div>
               </div>
               <div className='max-container'>
@@ -34,7 +35,7 @@ export default function Humiddetail() {
                   Max Humidity
                 </div>
                 <div className='num-max'>
-                { overviewData[1][1] }%
+                    { overviewData[1][1] }%
                 </div>
               </div>
               <div className='min-container'>
@@ -42,7 +43,7 @@ export default function Humiddetail() {
                   Min Humidity
                 </div>
                 <div className='num-min'>
-                { overviewData[1][2] }%
+                    { overviewData[1][2] }%
                 </div>
               </div>
             </div>
@@ -77,6 +78,7 @@ export default function Humiddetail() {
             <div className='note2-text'>Greater than Average</div>
           </div>
           </div>
+
           <Footer />
         </div>
       )
