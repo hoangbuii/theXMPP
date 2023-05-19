@@ -15,7 +15,6 @@ export default function Nodeinfodetail() {
             <div className='total-time-title-text'>Total Time</div>
         </div>
         {nodeData.map((nodes) => <Nodedetail node={nodes[0]} status={nodes[1]} time={nodes[2]} />)}
-
         <Footer />
     </div>
   )
