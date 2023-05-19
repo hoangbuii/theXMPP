@@ -1,0 +1,41 @@
+.n404-text {
+    position: absolute;
+    width: 293px;
+    height: 195px;
+    left: 971px;
+    top: 385px;
+    
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 150px;
+    line-height: 195px;
+    /* identical to box height */
+    
+    
+    color: #000000;
+}
+
+.logo-container {
+    position: absolute;
+    width: 315px;
+    height: 305px;
+    left: 656px;
+    top: 390px;
+}
+
+.notfound-text {
+    position: absolute;
+    width: 288px;
+    height: 92px;
+    left: 971px;
+    top: 603px;
+    
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 92px;
+    
+    color: #000000;
+}

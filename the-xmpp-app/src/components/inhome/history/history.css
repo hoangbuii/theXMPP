@@ -1,0 +1,59 @@
+.img-history-container {
+    position: absolute;
+    width: 48px;
+    height: 50px;
+    left: 25px;
+    top: 25px;
+}
+
+.name-history {
+    position: absolute;
+    width: 108px;
+    height: 52px;
+    left: 90px;
+    top: 23px;
+
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 52px;
+    /* identical to box height */
+
+
+    color: #000000;
+}
+
+.temp-history-icon {
+    position: absolute;
+    width: 54px;
+    height: 56px;
+    left: 40px;
+    top: 132px;
+}
+
+.humid-history-icon {
+    position: absolute;
+    width: 53px;
+    height: 67px;
+    left: 40px;
+    top: 265px;
+}
+
+.atm-history-icon {
+    position: absolute;
+    width: 51px;
+    height: 45px;
+    left: 40px;
+    top: 447px;
+    
+}
+
+.line-chart-temp {
+    position: absolute;
+    width: 854px;
+    height: 117px;
+    left: 122px;
+    top: 98px;
+
+}

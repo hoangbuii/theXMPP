@@ -1,0 +1,24 @@
+.img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+a:link {
+    color: white;
+  }
+a:visited {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+  }
+a:hover {
+    color: FEFEFE;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+a:active {
+    color: AAAAAA;
+    background-color: transparent;
+    text-decoration: underline;
+}

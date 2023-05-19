@@ -1,0 +1,22 @@
+.logo-container-large{
+    position: relative;
+    width: 481px;
+    height: 465px;
+    left: 719px;
+    margin-top: 53px;
+}
+
+.description-container {
+    position: relative;
+    width: 1586px;
+    height: 506px;
+    left: 210px;
+    margin-top: 53px;
+
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 46px;
+    color: #04080F;
+}

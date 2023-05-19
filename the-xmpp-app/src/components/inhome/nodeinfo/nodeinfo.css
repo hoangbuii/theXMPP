@@ -1,0 +1,127 @@
+.img-nodeinfo-container {
+    position: absolute;
+    width: 47px;
+    height: 51px;
+    left: 25px;
+    top: 25px;
+}
+
+.name-nodeinfo {
+    position: absolute;
+    height: 52px;
+    left: 90px;
+    top: 23px;
+
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 52px;
+    /* identical to box height */
+
+
+    color: #FFFFFF;
+}
+
+.totalnode-title {
+    position: absolute;
+    width: 338px;
+    height: 83px;
+    left: 203px;
+    top: 98px;
+
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 83px;
+
+    color: #FFFFFF;
+}
+
+.totalnode-text {
+    position: absolute;
+    width: 228px;
+    height: 139px;
+    left: 300px;
+    top: 160px;
+
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 96px;
+    line-height: 139px;
+    /* identical to box height */
+
+
+    color: #FFFFFF;
+}
+
+.onnode-title {
+    position: absolute;
+    width: 69px;
+    height: 83px;
+    left: 677px;
+    top: 80px;
+
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 83px;
+
+    color: #FFFFFF;
+}
+
+.onnode-text {
+    position: absolute;
+    width: 100px;
+    height: 58px;
+    left: 773px;
+    top: 105px;
+    
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 58px;
+    /* identical to box height */
+    
+    
+    color: #FFFFFF;
+}
+
+.offnode-title {
+    position: absolute;
+    width: 77px;
+    height: 83px;
+    left: 677px;
+    top: 183px;
+    
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 83px;
+    
+    color: #FFFFFF;
+
+}
+
+.offnode-text {
+    position: absolute;
+    width: 100px;
+    height: 58px;
+    left: 773px;
+    top: 208px;
+    
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 58px;
+    /* identical to box height */
+    
+    
+    color: #FFFFFF;
+}

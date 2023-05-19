@@ -1,0 +1,73 @@
+.temp-home-container {
+    position: relative;
+    width: 488px;
+    height: 488px;
+    left: 461px;
+    margin-top: 53px;
+
+    background: #BBD1EA;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 40px;
+}
+
+.img-temp-container {
+    position: absolute;
+    width: 54px;
+    height: 56px;
+    left: 20px;
+    top: 25px;
+
+}
+
+.name-temp {
+    position: absolute;
+    width: 187px;
+    height: 52px;
+    left: 90px;
+    top: 41px;
+
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 52px;
+    /* identical to box height */
+
+
+    color: #000000;
+}
+
+.avg-temp {
+    position: absolute;
+    width: 370px;
+    height: 217px;
+    left: 68px;
+    top: 110px;
+
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 150px;
+    line-height: 217px;
+    /* identical to box height */
+
+
+    color: #000000;
+}
+
+.min-max-temp {
+    position: absolute;
+    width: 260px;
+    height: 92px;
+    left: 125px;
+    top: 317px;
+
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 92px;
+
+    color: #000000;
+}
+
