@@ -1,15 +1,24 @@
 .n404-text {
     position: absolute;
+    
     width: 293px;
+    
     height: 195px;
+    
     left: 971px;
+    
     top: 385px;
     
     font-family: 'K2D';
+    
     font-style: normal;
+    
     font-weight: 400;
+    
     font-size: 150px;
+    
     line-height: 195px;
+    
     /* identical to box height */
     
     
@@ -17,7 +26,7 @@
 }
 
 .logo-container {
-    position: absolute;
+    position: relative;
     width: 315px;
     height: 305px;
     left: 656px;
@@ -25,7 +34,7 @@
 }
 
 .notfound-text {
-    position: absolute;
+    position: relative;
     width: 288px;
     height: 92px;
     left: 971px;
