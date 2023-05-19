@@ -26,7 +26,7 @@
 }
 
 .logo-container {
-    position: relative;
+    position: absolute;
     width: 315px;
     height: 305px;
     left: 656px;
@@ -34,7 +34,7 @@
 }
 
 .notfound-text {
-    position: relative;
+    position: absolute;
     width: 288px;
     height: 92px;
     left: 971px;
