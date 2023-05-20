@@ -67,7 +67,7 @@ public class SGN {
         Atm += sign * offset;
         if (Atm < minAtm) {
             // Adjust Atm within the range [2-5] if it falls below minAtm
-            Atm = minTemp + 2 + Math.random() * 3;
+            Atm = minAtm + 2 + Math.random() * 3;
             weightRange = 1.5; // Reset the weight range
         } else if (Atm > maxAtm) {
             // Adjust Atm within the range [2-5] if it exceeds maxAtm
