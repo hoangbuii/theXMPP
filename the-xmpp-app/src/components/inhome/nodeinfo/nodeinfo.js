@@ -26,7 +26,7 @@ export default function NodeInfo() {
             <div className='name-nodeinfo'>Node Information</div>
 
             <div className='content-nodeinfo-container'>
-              <div className='totalnode-title'>Total Node</div>
+              <div className='totalnode-title'>Total Nodes</div>
               <div className='totalnode-text'>
                 {totalnode()[0] + totalnode()[1]}
               </div>
