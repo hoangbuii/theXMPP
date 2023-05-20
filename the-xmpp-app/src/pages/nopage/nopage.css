@@ -4,12 +4,15 @@
     height: 195px;
     left: 971px;
     top: 385px;
+    
     font-family: 'K2D';
     font-style: normal;
     font-weight: 400;
     font-size: 150px;
     line-height: 195px;
     /* identical to box height */
+    
+    
     color: #000000;
 }
 
@@ -33,5 +36,6 @@
     font-weight: 400;
     font-size: 64px;
     line-height: 92px;
+    
     color: #000000;
 }

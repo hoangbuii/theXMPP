@@ -8,14 +8,14 @@ export default function About() {
     <div>
         <Header />
           <div className='about-container'>
-            <div className='logo-container-large'>
-              <img src='./assets/logo.png' alt='no-img' className='img'/>
-            </div> 
-              <div className='description-container'> 
-                TheXMPP project is built based on the XMPP Protocol which leverages the Openfire platform to setup and put to work. The platform uses various technology such as NodeJS, ReactJS, etc... to demonstrate how we can use sensors to communicate with the servers. <br>
-                The program uses sensors to detect and calculate the temperature, humidity, and atmospheric pressure in the air and send those information to a server in the form of a packet, which then can be sent back to users on the other end. <br>
-              </div>
-            </div>    
+          <div className='logo-container-large'>
+            <img src='./assets/logo.png' alt='no-img' className='img' />
+          </div> 
+          <div className='description-container'> 
+            The implementation of XMPP (Extensible Messaging and Presence Protocol) for sensor networks has become increasingly popular in recent years. XMPP is a widely-used communication protocol that allows for the exchange of data between devices, making it an ideal choice for use in sensor networks. This report provides an overview of the implementation of XMPP for sensor networks using Openfire server and Smack library.<br/>
+            The implementation section provides a detailed guide for setting up and configuring the Openfire server and Smack library for use in a sensor network. This section includes information about configuring the server, installing and configuring the Smack library, and setting up communication between devices.<br/>
+            Overall, this report provides a comprehensive overview of the implementation of XMPP for sensor networks using Openfire server and Smack library. It is intended to be a useful resource for those interested in developing and implementing XMPP-based solutions for sensor networks, as well as for those who want to better understand the benefits and challenges associated with this approach.<br/>
+          </div>    
           </div>
         <Footer />
     </div>

@@ -2,8 +2,7 @@ import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import overviewData from '../../../data/overviewdata';
 import nodeData from '../../../data/nodedata';
-import { 
-    Chart as ChartJS,
+import { Chart as ChartJS,
     ArcElement
 } from 'chart.js';
 ChartJS.register(ArcElement);

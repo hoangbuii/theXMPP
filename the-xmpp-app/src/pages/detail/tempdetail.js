@@ -10,7 +10,6 @@ export default function Tempdetail() {
   return (
     <div className='detail-container'>
       <Header />
-    
       <div className='content-container'>
         <div className='overview-container'>
           <div className='title-container'>
@@ -27,7 +26,7 @@ export default function Tempdetail() {
               Average Temperature
             </div>
             <div className='num-avg'>
-              { overviewData[0][0] } °C 
+            { overviewData[0][0] } °C 
             </div>
           </div>
           <div className='max-container'>
@@ -35,7 +34,7 @@ export default function Tempdetail() {
               Max Temperature
             </div>
             <div className='num-max'>
-              { overviewData[0][1] }° 
+            { overviewData[0][1] }° 
             </div>
           </div>
           <div className='min-container'>
@@ -43,7 +42,7 @@ export default function Tempdetail() {
               Min Temperature
             </div>
             <div className='num-min'>
-              { overviewData[0][2] }° 
+            { overviewData[0][2] }° 
             </div>
           </div>
         </div>
@@ -78,7 +77,6 @@ export default function Tempdetail() {
           <div className='note2-text'>Greater than Average</div>
         </div>
       </div>
-
       <Footer />
     </div>
   )
