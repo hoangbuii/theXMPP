@@ -46,7 +46,7 @@ const BarChart = (props) => {
             label: 'Temperature',
             data: Num,
             fill: false,
-            backgroundColor: 'rgba(80, 125, 188, 0.5)',
+            backgroundColor: 'rgba(81, 125, 188, 0.5)',
             tension: 0.1
           }
         ]
