@@ -32,4 +32,3 @@ Example:
 String sensorData = "sensor|gateway|16531512052023|0|35|60|1012|none|";
 String controlData = "gateway|sensor|17003812052023|1|0|0|0|off sensor|";
 ```
-## Implementation
