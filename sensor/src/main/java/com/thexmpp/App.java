@@ -82,7 +82,7 @@ public final class App {
                     muc.join(Resourcepart.from(tempNickname));
                     break;
                 } catch (XMPPErrorException e) {
-                    System.out.println("This nick name alreadly exits!");
+                    System.out.println("This nickname already exist!");
                     e.getMessage();
                 }
             }
@@ -119,7 +119,7 @@ public final class App {
                             }
                         }
                     } catch (IndexOutOfBoundsException e) {
-                        System.out.println("Error packet: Missing some collums");
+                        System.out.println("Error packet: Missing some columns");
                     }
                 }
             });
@@ -145,17 +145,17 @@ public final class App {
 
               @Override
               public void kicked(EntityFullJid participant, Jid actor, String reason) {
-                  System.out.println(participant + " has kicked by " + actor + " for " + reason);
+                  System.out.println(participant + " was kicked by " + actor + " for " + reason);
               }
 
               @Override
               public void banned(EntityFullJid participant, Jid actor, String reason) {
-                  System.out.println(participant + " has banned by " + actor + " for " + reason);
+                  System.out.println(participant + " was banned by " + actor + " for " + reason);
               }
 
               @Override
               public void nicknameChanged(EntityFullJid participant, Resourcepart newNickname) {
-                  System.out.println(participant + " has change nickname to" + newNickname);
+                  System.out.println(participant + " has changed nickname to" + newNickname);
               }
 
               @Override
