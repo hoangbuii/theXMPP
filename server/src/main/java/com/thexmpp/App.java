@@ -72,6 +72,7 @@ public final class App {
             String groupName = sc.nextLine();
             EntityBareJid jid = JidCreate.entityBareFrom(groupName + "@conference." + domain);
             MultiUserChat muc = manager.getMultiUserChat(jid);
+            SensorStatus sensorStatus = new SensorStatus();
 
             String tempNickname = "";
             // Enter group
@@ -83,7 +84,7 @@ public final class App {
 
                     break;
                 } catch (XMPPErrorException e) {
-                    System.out.println("This nickname alreadly exist!");
+                    System.out.println("This nick name alreadly exits!");
                     e.getMessage();
                 } catch (NullPointerException e) {
                     System.out.println(e.getMessage());
@@ -93,8 +94,10 @@ public final class App {
 
             // Add a listener to receive messages from the chat room
             muc.addMessageListener(new MessageListener() {
+                
                 @Override
                 public void processMessage(Message message) {
+                    //SensorData sd = new SensorData();
                     try {
                         // Display message
                         System.out.println(message.getFrom() + ": " + message.getBody());
@@ -107,6 +110,11 @@ public final class App {
                             if (timeData == null) {
                                 System.out.println("Error packet: Missing Time");
                             } else {
+
+                                if (data.get("type").equals("1")) {
+                                    sensorStatus.changeSensorStatus(data.get("to"), data.get("control"));
+                                }
+                                
                                 if (data.get("to").equals(NICKNAME)) {
                                     // Display data
                                     System.out.print("Data from: " + data.get("from") + " at ");
@@ -118,15 +126,19 @@ public final class App {
                                     System.out.println("Humidity: " + data.get("humid"));
                                     System.out.println("Atmospheric pressure: " + data.get("atm"));
 
+
+                                    //sd.processIncomeSensorData(data, timeData);
+
                                     // Save data to log
                                     String stringLog = String.format(
-                                            "[%s:%s:%s %s-%s-%s] temp:%s, humid:%s, atm:%s%n",
+                                            "%s [%s:%s:%s %s-%s-%s] temp:%s, humid:%s, atm:%s%n",
+                                            data.get("from"),
                                             timeData.get("hour"), timeData.get("minute"),
                                             timeData.get("second"), timeData.get("day"),
                                             timeData.get("month"), timeData.get("year"),
                                             data.get("temp"), data.get("humid"), data.get("atm"));
                                     try {
-                                        File file = new File("logs/" + data.get("from") + ".txt");
+                                        File file = new File("logs/data.txt");
                                         FileWriter fr = new FileWriter(file, true);
 
                                         fr.write(stringLog);
@@ -139,7 +151,7 @@ public final class App {
                             }
                         }
                     } catch (StringIndexOutOfBoundsException e) {
-                        System.out.println("Error packet: Missing some columns");
+                        System.out.println("Error packet: Missing some collums");
                     }
                 }
             });
@@ -154,27 +166,39 @@ public final class App {
 
                 @Override
                 public void joined(EntityFullJid participant) {
+                    String par = String.format("%s", participant);
+                    String sName = par.substring(par.indexOf('/') + 1);
+                    sensorStatus.changeSensorStatus(sName, "connected");
                     System.out.println(participant + " has joined the room.");
                 }
 
                 @Override
                 public void left(EntityFullJid participant) {
+                    String par = String.format("%s", participant);
+                    String sName = par.substring(par.indexOf('/') + 1);
+                    sensorStatus.changeSensorStatus(sName, "disconnected");
                     System.out.println(participant + " has left the room.");
                 }
 
                 @Override
                 public void kicked(EntityFullJid participant, Jid actor, String reason) {
-                    System.out.println(participant + " was kicked by " + actor + " for " + reason);
+                    String par = String.format("%s", participant);
+                    String sName = par.substring(par.indexOf('/') + 1);
+                    sensorStatus.changeSensorStatus(sName, "kicked");
+                    System.out.println(participant + " has kicked by " + actor + " for " + reason);
                 }
 
                 @Override
                 public void banned(EntityFullJid participant, Jid actor, String reason) {
-                    System.out.println(participant + " was banned by " + actor + " for " + reason);
+                    String par = String.format("%s", participant);
+                    String sName = par.substring(par.indexOf('/') + 1);
+                    sensorStatus.changeSensorStatus(sName, "banned");
+                    System.out.println(participant + " has banned by " + actor + " for " + reason);
                 }
 
                 @Override
                 public void nicknameChanged(EntityFullJid participant, Resourcepart newNickname) {
-                    System.out.println(participant + " has changed nickname to " + newNickname);
+                    System.out.println(participant + " has change nickname to " + newNickname);
                 }
 
                 @Override
@@ -218,7 +242,7 @@ public final class App {
                 }
 
             });
-
+            
             // send message to group
             while (true) {
                 String msg = sc.nextLine();
